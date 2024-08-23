@@ -44,6 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
         score = 0;
         document.getElementById('score').textContent = score;
         // Add code here to generate and populate the Sudoku board
+        function generatePuzzle() {
+    const puzzle = sudoku.generate("easy"); // Difficulty can be 'easy', 'medium', 'hard', 'very-hard'
+    return puzzle.split(''); // Splits the string into an array for easy access
+}
+
+function populateBoard(puzzle) {
+    const inputs = document.querySelectorAll('.cell');
+    inputs.forEach((input, index) => {
+        if (puzzle[index] !== '.') {
+            input.value = puzzle[index];
+            input.disabled = true; // Make it read-only
+        } else {
+            input.value = '';
+            input.disabled = false;
+        }
+    });
+}
+
     }
 
     newGameButton.addEventListener('click', startNewGame);
