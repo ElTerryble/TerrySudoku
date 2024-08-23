@@ -1,5 +1,6 @@
 // main.js
 import { startTimer, resetTimer } from './timer.js';
+import { increaseScore, decreaseScore, resetScore } from './score.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const boardElement = document.getElementById('sudoku-board');
@@ -17,9 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
             input.maxLength = 1;
             input.classList.add('cell');
             boardElement.appendChild(input);
+
+                        // Event listener to handle input validation
+            input.addEventListener('input', (e) => {
+                validateInput(e.target);
+            });
         }
     }
 
+        // Function to validate input
+    function validateInput(inputElement) {
+        const correctValue = getCorrectValueForCell(inputElement); // Placeholder for actual Sudoku logic
+        if (inputElement.value == correctValue) {
+            increaseScore();
+        } else {
+            decreaseScore();
+        }
+    }
+    
     // Function to start a new game
     function startNewGame() {
         createBoard();
