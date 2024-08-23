@@ -2,6 +2,25 @@
 import { startTimer, resetTimer } from './timer.js';
 import { increaseScore, decreaseScore, resetScore } from './score.js';
 
+function generatePuzzle() {
+    const puzzle = sudoku.generate("easy"); // Difficulty can be 'easy', 'medium', 'hard', 'very-hard'
+    return puzzle.split(''); // Splits the string into an array for easy access
+}
+
+function populateBoard(puzzle) {
+    const inputs = document.querySelectorAll('.cell');
+    inputs.forEach((input, index) => {
+        if (puzzle[index] !== '.') {
+            input.value = puzzle[index];
+            input.disabled = true; // Make it read-only
+        } else {
+            input.value = '';
+            input.disabled = false;
+        }
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const boardElement = document.getElementById('sudoku-board');
     const newGameButton = document.getElementById('new-game');
@@ -43,24 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
         timer = startTimer(timerElement);
         score = 0;
         document.getElementById('score').textContent = score;
-        // Add code here to generate and populate the Sudoku board
-        function generatePuzzle() {
-    const puzzle = sudoku.generate("easy"); // Difficulty can be 'easy', 'medium', 'hard', 'very-hard'
-    return puzzle.split(''); // Splits the string into an array for easy access
+        
+              // Add code here to generate and populate the Sudoku board
+        function startNewGame() {
+    const puzzle = generatePuzzle();
+    populateBoard(puzzle);
+    resetTimer(timerElement);
+    timer = startTimer(timerElement);
+    resetScore();
 }
 
-function populateBoard(puzzle) {
-    const inputs = document.querySelectorAll('.cell');
-    inputs.forEach((input, index) => {
-        if (puzzle[index] !== '.') {
-            input.value = puzzle[index];
-            input.disabled = true; // Make it read-only
-        } else {
-            input.value = '';
-            input.disabled = false;
-        }
-    });
-}
 
     }
 
